@@ -22,3 +22,6 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Added by Critical to ensure no issues arise between machines
+package-lock.json
