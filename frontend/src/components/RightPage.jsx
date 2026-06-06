@@ -213,13 +213,7 @@ const RosterPage = ({
       <span>- {pageNumber} -</span>
     </div>
 
-    <div className="roster-title">
-      <p className="section-kicker">Spread {rosterPage + 1}</p>
-      <h2>Quick scan</h2>
-      <p>Names, interests, and first impressions before the close-up pages.</p>
-    </div>
-
-    <div className="roster-grid">
+    <div className="roster-stack">
       {students.map((student) => (
         <RosterCard
           key={student.id}
@@ -240,20 +234,18 @@ const RosterPage = ({
 );
 
 const RosterCard = ({ student, onClick }) => (
-  <button type="button" className="roster-card" onClick={onClick}>
+  <button type="button" className="roster-card-expanded" onClick={onClick}>
     <span
-      className="roster-card-portrait"
+      className="roster-card-portrait-expanded"
       style={{ backgroundColor: student.color }}
       aria-hidden="true"
     >
       {student.photoUrl ? <img src={student.photoUrl} alt="" /> : getInitials(student.fullName)}
     </span>
-    <span className="roster-card-copy">
-      <span className="roster-card-name">{student.fullName}</span>
-      <span className="roster-card-meta">
-        {student.pronouns} / {student.studentId}
-      </span>
-      <span className="roster-card-desc">{student.shortDesc}</span>
+    <span className="roster-card-copy-expanded">
+      <span className="roster-card-name-expanded">{student.fullName}</span>
+      <span className="roster-card-meta-expanded">{student.pronouns} / {student.studentId}</span>
+      <span className="roster-card-desc-expanded">{student.shortDesc}</span>
     </span>
   </button>
 );

@@ -205,7 +205,6 @@ const LeftPage = ({
 };
 
 const RosterPage = ({
-  side,
   section,
   students,
   rosterPage,
@@ -226,17 +225,11 @@ const RosterPage = ({
         &larr; Previous spread
       </button>
       <span>
-        {section.toUpperCase()} roster {rosterPage + 1}/{maxRosterPage + 1}
+        {section.toUpperCase()} roster
       </span>
     </div>
 
-    <div className="roster-title">
-      <p className="section-kicker">Classmates First</p>
-      <h2>{side === 'left' ? 'Browse the class' : 'Meet the cohort'}</h2>
-      <p>A compact first pass through the people who make up this section.</p>
-    </div>
-
-    <div className="roster-grid">
+    <div className="roster-stack">
       {students.map((rosterStudent) => (
         <RosterCard
           key={rosterStudent.id}
@@ -251,9 +244,9 @@ const RosterPage = ({
 );
 
 const RosterCard = ({ student, onClick }) => (
-  <button type="button" className="roster-card" onClick={onClick}>
+  <button type="button" className="roster-card-expanded" onClick={onClick}>
     <span
-      className="roster-card-portrait"
+      className="roster-card-portrait-expanded"
       style={{ backgroundColor: student.color }}
       aria-hidden="true"
     >
@@ -263,12 +256,10 @@ const RosterCard = ({ student, onClick }) => (
         getInitials(student.fullName)
       )}
     </span>
-    <span className="roster-card-copy">
-      <span className="roster-card-name">{student.fullName}</span>
-      <span className="roster-card-meta">
-        {student.pronouns} / {student.studentId}
-      </span>
-      <span className="roster-card-desc">{student.shortDesc}</span>
+    <span className="roster-card-copy-expanded">
+      <span className="roster-card-name-expanded">{student.fullName}</span>
+      <span className="roster-card-meta-expanded">{student.pronouns} / {student.studentId}</span>
+      <span className="roster-card-desc-expanded">{student.shortDesc}</span>
     </span>
   </button>
 );

@@ -9,8 +9,7 @@ import { allStudents, csStudents, sweStudents } from './data/mockData';
 
 const TRANSITION_MS = 680;
 const CAROUSEL_SIZE = 5;
-const STUDENTS_PER_SPREAD = 8;
-const STUDENTS_PER_PAGE = STUDENTS_PER_SPREAD / 2;
+const STUDENTS_PER_PAGE = 6;
 
 const sortedBySurname = (students) =>
   [...students].sort((a, b) =>
@@ -76,15 +75,15 @@ function App() {
   const maxCarouselStart = Math.max(0, activeStudents.length - CAROUSEL_SIZE);
   const maxRosterPage = Math.max(
     0,
-    Math.ceil(activeStudents.length / STUDENTS_PER_SPREAD) - 1
+    Math.ceil(activeStudents.length / STUDENTS_PER_PAGE) - 1
   );
-  const rosterStart = rosterPage * STUDENTS_PER_SPREAD;
-  const spreadStudents = activeStudents.slice(
+  const rosterStart = rosterPage * STUDENTS_PER_PAGE;
+  const rosterStudents = activeStudents.slice(
     rosterStart,
-    rosterStart + STUDENTS_PER_SPREAD
+    rosterStart + STUDENTS_PER_PAGE
   );
-  const leftRosterStudents = spreadStudents.slice(0, STUDENTS_PER_PAGE);
-  const rightRosterStudents = spreadStudents.slice(STUDENTS_PER_PAGE);
+  const leftRosterStudents = rosterStudents.slice(0, Math.ceil(STUDENTS_PER_PAGE / 2));
+  const rightRosterStudents = rosterStudents.slice(Math.ceil(STUDENTS_PER_PAGE / 2));
   const stageView = nextView || view;
 
   const navigate = (targetView) => {
@@ -119,7 +118,7 @@ function App() {
         0,
         Math.floor(
           nextSectionStudents.findIndex((item) => item.id === student.id) /
-            STUDENTS_PER_SPREAD
+            STUDENTS_PER_PAGE
         )
       )
     );
@@ -132,7 +131,7 @@ function App() {
     setActiveLetter(getInitialLetter(student));
     setDirectoryMode('profile');
     setCarouselStart(getCarouselStartFor(student, activeStudents));
-    setRosterPage(Math.max(0, Math.floor(nextIndex / STUDENTS_PER_SPREAD)));
+    setRosterPage(Math.max(0, Math.floor(nextIndex / STUDENTS_PER_PAGE)));
   };
 
   const handleSectionChange = (nextSection) => {
@@ -166,7 +165,7 @@ function App() {
       setRosterPage(
         Math.floor(
           activeStudents.findIndex((student) => student.id === match.id) /
-            STUDENTS_PER_SPREAD
+            STUDENTS_PER_PAGE
         )
       );
       setCarouselStart(getCarouselStartFor(match, activeStudents));
