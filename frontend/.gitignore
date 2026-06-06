@@ -24,4 +24,8 @@ dist-ssr
 *.sw?
 
 # Added by Critical to ensure no issues arise between machines
-package-lock.json
+cs31-web.zip
+brain/
+
+# Agentic coding may use local PY files to execute code. Let's not share bloat
+*.py
