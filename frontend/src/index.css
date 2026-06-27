@@ -1590,14 +1590,14 @@ a {
 
 .quote-section {
   border-left: 1px solid rgba(95, 81, 67, 0.18);
-  padding-left: clamp(18px, 2vw, 34px);
+  padding-left: clamp(9px, 1vw, 17px);
 }
 
 .quote-section blockquote {
   margin: 0;
   display: grid;
   place-items: center;
-  min-height: 140px;
+  min-height: 70px;
   color: var(--ink);
   text-align: center;
 }
@@ -1607,12 +1607,12 @@ a {
   font-family: var(--font-serif);
   font-size: clamp(1.35rem, 2vw, 2rem);
   font-style: italic;
-  line-height: 1.32;
+  line-height: 1.1;
   text-wrap: balance;
 }
 
 .quote-section cite {
-  margin-top: 12px;
+  margin-top: 6px;
   color: var(--ink-soft);
   font-family: var(--font-serif);
   font-size: 0.95rem;

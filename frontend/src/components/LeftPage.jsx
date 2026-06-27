@@ -173,26 +173,7 @@ const LeftPage = ({
       </div>
 
       <div className="profile-details">
-        <DetailRow label="Class / Year" value={student.classYear} />
-        <DetailRow label="Student ID" value={student.studentId} />
-        <DetailRow label="Interests" value={student.interests} />
-        <DetailRow label="Favourite Subject" value={student.favouriteSubject} />
-        <DetailRow label="Clubs" value={student.clubs} />
         <DetailRow label="Bio" value={student.longDesc} isLong />
-      </div>
-
-      <div className="connect-row">
-        <span>Connect</span>
-        <a href={`mailto:${student.email}`}>Email</a>
-        <a href={student.instagram} target="_blank" rel="noreferrer">
-          Instagram
-        </a>
-        <a href={student.linkedIn} target="_blank" rel="noreferrer">
-          LinkedIn
-        </a>
-        <a href={student.website} target="_blank" rel="noreferrer">
-          Website
-        </a>
       </div>
 
       <PageNumber pageNumber={pageNumber} />
