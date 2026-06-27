@@ -253,6 +253,10 @@ const RosterCard = ({ student, onClick }) => (
 const IndexRightPage = ({ students, activeStudentId, onStudentSelect, pageNumber }) => {
   const groups = groupBySurnameLetter(students);
   const letters = Object.keys(groups).sort();
+  const getPageNumberForStudent = (student) => {
+    const studentIndex = students.findIndex((item) => item.id === student.id);
+    return 1 + Math.max(0, studentIndex) * 2;
+  };
 
   return (
     <div className="page-content index-right-page">
@@ -266,7 +270,7 @@ const IndexRightPage = ({ students, activeStudentId, onStudentSelect, pageNumber
           <section key={letter} className="index-letter-group">
             <h3>{letter}</h3>
             <div>
-              {groups[letter].map((student, index) => (
+              {groups[letter].map((student) => (
                 <button
                   key={student.id}
                   type="button"
@@ -276,7 +280,7 @@ const IndexRightPage = ({ students, activeStudentId, onStudentSelect, pageNumber
                   onClick={() => onStudentSelect(student)}
                 >
                   <span>{student.fullName}</span>
-                  <span>p.{124 + index * 2}</span>
+                  <span>p.{getPageNumberForStudent(student)}</span>
                 </button>
               ))}
             </div>
@@ -326,7 +330,7 @@ const NearbyEntries = ({ students, selectedIndex, activeStudentId, onStudentSele
             onClick={() => onStudentSelect(student)}
           >
             <span>{getSurname(student)}, {student.fullName.split(/\s+/)[0]}</span>
-            <span>p.{124 + (start + offset) * 2}</span>
+            <span>p.{1 + (start + offset) * 2}</span>
           </button>
         ))}
       </div>

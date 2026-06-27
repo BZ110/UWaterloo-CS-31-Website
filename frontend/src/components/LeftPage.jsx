@@ -29,8 +29,6 @@ const LeftPage = ({
   students,
   rosterStudents,
   section,
-  rosterPage,
-  maxRosterPage,
   canPrev,
   canRosterPrev,
   onPrev,
@@ -47,8 +45,6 @@ const LeftPage = ({
         side="left"
         section={section}
         students={rosterStudents}
-        rosterPage={rosterPage}
-        maxRosterPage={maxRosterPage}
         canMove={canRosterPrev}
         onMove={onRosterPrev}
         onStudentSelect={onStudentSelect}
@@ -207,8 +203,6 @@ const LeftPage = ({
 const RosterPage = ({
   section,
   students,
-  rosterPage,
-  maxRosterPage,
   canMove,
   onMove,
   onStudentSelect,

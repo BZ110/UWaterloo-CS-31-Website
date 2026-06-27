@@ -27,13 +27,12 @@ const RealisticBook = ({
         </div>
 
         <div className="page-stack page-stack-left" aria-hidden="true" />
-        <div className="page-stack page-stack-right" aria-hidden="true">
-          <RightAlphabetTabs
-            activeLetter={activeLetter}
-            availableLetters={availableLetters}
-            onLetterClick={onLetterClick}
-          />
-        </div>
+        <div className="page-stack page-stack-right" aria-hidden="true" />
+        <RightAlphabetTabs
+          activeLetter={activeLetter}
+          availableLetters={availableLetters}
+          onLetterClick={onLetterClick}
+        />
         <div className="page-stack-bottom" aria-hidden="true" />
         <div className="book-ribbon" aria-hidden="true" />
 

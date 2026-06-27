@@ -269,8 +269,8 @@ function App() {
                   canSpeak={canSpeak}
                   pageNumber={
                     directoryMode === 'overview'
-                      ? 124 + rosterPage * 2
-                      : 124 + Math.max(selectedIndex, 0) * 2
+                      ? 1 + rosterPage * 2
+                      : 1 + Math.max(selectedIndex, 0) * 2
                   }
                 />
               }
@@ -300,8 +300,8 @@ function App() {
                   onCarouselNext={handleCarouselNext}
                   pageNumber={
                     directoryMode === 'overview'
-                      ? 125 + rosterPage * 2
-                      : 125 + Math.max(selectedIndex, 0) * 2
+                      ? 2 + rosterPage * 2
+                      : 2 + Math.max(selectedIndex, 0) * 2
                   }
                 />
               }

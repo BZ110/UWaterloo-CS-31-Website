@@ -10,7 +10,7 @@ const TopBookmarks = ({ activeSection, onSectionChange }) => {
         <button
           key={section}
           type="button"
-          className={`section-bookmark ${
+          className={`section-bookmark section-bookmark-${section} ${
             activeSection === section ? 'is-active' : ''
           }`}
           onClick={() => onSectionChange(section)}
