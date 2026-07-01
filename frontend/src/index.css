@@ -663,6 +663,9 @@ a {
 }
 
 .book-frame {
+  --book-outer-radius: 18px;
+  --book-inner-radius: 14px;
+  --book-corner-size: clamp(44px, 4vw, 64px);
   position: relative;
   width: min(1760px, calc(100dvw - 72px));
   height: clamp(560px, calc(100dvh - var(--nav-height) - 36px), 860px);
@@ -681,7 +684,7 @@ a {
   inset: 7px 9px 8px;
   z-index: 8;
   border: 1px solid rgba(231, 192, 114, 0.28);
-  border-radius: 14px;
+  border-radius: var(--book-inner-radius);
   box-shadow:
     inset 0 0 0 2px rgba(18, 8, 5, 0.58),
     inset 0 0 0 5px rgba(95, 50, 24, 0.5),
@@ -689,13 +692,13 @@ a {
 }
 
 .book-frame::after {
-  left: 54px;
-  right: 54px;
-  bottom: 17px;
+  left: 30px;
+  right: 30px;
+  bottom: 18px;
   z-index: 3;
   height: 5px;
-  border-radius: 0 0 8px 8px;
-  opacity: 0.62;
+  border-radius: 0 0 12px 12px;
+  opacity: 0.48;
   background:
     linear-gradient(90deg, transparent, rgba(75, 45, 26, 0.18) 9%, transparent 18%, transparent 82%, rgba(75, 45, 26, 0.18) 91%, transparent),
     repeating-linear-gradient(
@@ -708,12 +711,15 @@ a {
   box-shadow:
     0 3px 6px rgba(0, 0, 0, 0.22),
     inset 0 -3px 6px rgba(93, 65, 38, 0.22);
+  -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 14px, #000 calc(100% - 14px), transparent 100%);
+  mask-image: linear-gradient(90deg, transparent 0, #000 14px, #000 calc(100% - 14px), transparent 100%);
 }
 
 .book-cover,
 .paper-spread,
 .page-stack,
 .page-stack-bottom,
+.page-stack-turn,
 .book-ribbon {
   position: absolute;
 }
@@ -721,15 +727,17 @@ a {
 .book-cover,
 .page-stack,
 .page-stack-bottom,
+.page-stack-turn,
 .book-ribbon {
   pointer-events: none;
 }
 
 .book-cover {
   inset: 0;
-  z-index: 0;
+  z-index: auto;
+  overflow: hidden;
   border: 1px solid rgba(16, 8, 5, 0.88);
-  border-radius: 18px;
+  border-radius: var(--book-outer-radius);
   background:
     linear-gradient(90deg, rgba(255, 245, 218, 0.1), transparent 13%, rgba(0, 0, 0, 0.34) 49%, rgba(255, 240, 205, 0.08) 51%, transparent 86%, rgba(255, 245, 218, 0.09)),
     radial-gradient(circle at 19% 11%, rgba(216, 189, 132, 0.18), transparent 18rem),
@@ -766,66 +774,151 @@ a {
 }
 
 .cover-corner {
-  display: none;
+  position: absolute;
+  z-index: 3;
+  display: block;
+  width: var(--book-corner-size);
+  height: var(--book-corner-size);
+  color: rgba(226, 186, 103, 0.68);
+  pointer-events: none;
+  filter: drop-shadow(0 2px 3px rgba(0, 0, 0, 0.22));
+}
+
+.cover-corner::before,
+.cover-corner::after {
+  content: "";
+  position: absolute;
+  border-color: currentColor;
+  pointer-events: none;
 }
 
 .corner-tl {
-  top: 13px;
-  left: 13px;
+  top: 10px;
+  left: 10px;
   border-top: 1px solid;
   border-left: 1px solid;
-  border-top-left-radius: 10px;
+  border-top-left-radius: var(--book-inner-radius);
+}
+
+.corner-tl::before {
+  inset: 6px 11px 11px 6px;
+  border-top: 1px solid;
+  border-left: 1px solid;
+  border-top-left-radius: 9px;
+  opacity: 0.58;
+}
+
+.corner-tl::after {
+  top: 8px;
+  left: 8px;
 }
 
 .corner-tr {
-  top: 13px;
-  right: 13px;
+  top: 10px;
+  right: 10px;
   border-top: 1px solid;
   border-right: 1px solid;
-  border-top-right-radius: 10px;
+  border-top-right-radius: var(--book-inner-radius);
+}
+
+.corner-tr::before {
+  inset: 6px 6px 11px 11px;
+  border-top: 1px solid;
+  border-right: 1px solid;
+  border-top-right-radius: 9px;
+  opacity: 0.58;
+}
+
+.corner-tr::after {
+  top: 8px;
+  right: 8px;
 }
 
 .corner-bl {
-  bottom: 13px;
-  left: 13px;
+  display: none;
+  bottom: 10px;
+  left: 10px;
   border-bottom: 1px solid;
   border-left: 1px solid;
-  border-bottom-left-radius: 10px;
+  border-bottom-left-radius: var(--book-inner-radius);
+}
+
+.corner-bl::before {
+  inset: 11px 11px 6px 6px;
+  border-bottom: 1px solid;
+  border-left: 1px solid;
+  border-bottom-left-radius: 9px;
+  opacity: 0.58;
+}
+
+.corner-bl::after {
+  bottom: 8px;
+  left: 8px;
 }
 
 .corner-br {
-  right: 13px;
-  bottom: 13px;
+  display: none;
+  right: 10px;
+  bottom: 10px;
   border-right: 1px solid;
   border-bottom: 1px solid;
-  border-bottom-right-radius: 10px;
+  border-bottom-right-radius: var(--book-inner-radius);
+}
+
+.corner-br::before {
+  inset: 11px 6px 6px 11px;
+  border-bottom: 1px solid;
+  border-right: 1px solid;
+  border-bottom-right-radius: 9px;
+  opacity: 0.58;
+}
+
+.corner-br::after {
+  right: 8px;
+  bottom: 8px;
+}
+
+.corner-tl::after,
+.corner-tr::after,
+.corner-bl::after,
+.corner-br::after {
+  width: 4px;
+  height: 4px;
+  border: 0;
+  border-radius: 999px;
+  background: currentColor;
+  box-shadow:
+    0 0 0 1px rgba(18, 8, 5, 0.42),
+    0 1px 3px rgba(0, 0, 0, 0.32);
+  opacity: 0.42;
 }
 
 .page-stack {
-  top: 14px;
-  bottom: 20px;
+  top: 18px;
+  bottom: 18px;
   z-index: 2;
-  width: auto;
+  width: 30px;
   overflow: hidden;
-  border: 1px solid rgba(102, 74, 43, 0.1);
+  border: 0;
+  opacity: 0.86;
   background:
-    linear-gradient(180deg, rgba(255, 255, 255, 0.7), transparent 13%, transparent 87%, rgba(97, 66, 38, 0.18)),
-    linear-gradient(90deg, rgba(94, 62, 35, 0.22), rgba(255, 251, 241, 0.62) 18%, rgba(234, 220, 192, 0.74) 70%, rgba(94, 62, 35, 0.2)),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.52), transparent 12%, transparent 88%, rgba(92, 62, 35, 0.18)),
+    linear-gradient(90deg, rgba(78, 50, 29, 0.28), rgba(255, 253, 246, 0.62) 36%, rgba(228, 210, 177, 0.78) 78%, rgba(95, 64, 38, 0.2)),
     repeating-linear-gradient(
       90deg,
-      rgba(255, 253, 246, 0.74) 0,
-      rgba(255, 253, 246, 0.74) 1px,
-      rgba(173, 145, 103, 0.2) 1px,
-      rgba(173, 145, 103, 0.2) 2px,
-      rgba(241, 229, 205, 0.78) 2px,
-      rgba(241, 229, 205, 0.78) 5px
+      rgba(255, 253, 246, 0.78) 0,
+      rgba(255, 253, 246, 0.78) 1px,
+      rgba(173, 145, 103, 0.24) 1px,
+      rgba(173, 145, 103, 0.24) 2px,
+      rgba(241, 229, 205, 0.76) 2px,
+      rgba(241, 229, 205, 0.76) 5px
     ),
     repeating-linear-gradient(
       180deg,
       transparent 0,
-      transparent 10px,
-      rgba(116, 82, 51, 0.1) 10px,
-      rgba(116, 82, 51, 0.1) 11px
+      transparent 8px,
+      rgba(116, 82, 51, 0.1) 8px,
+      rgba(116, 82, 51, 0.1) 9px
     );
   background-blend-mode: multiply, normal, normal, normal;
 }
@@ -841,80 +934,58 @@ a {
 
 .page-stack-left {
   left: 21px;
-  right: calc(50% + clamp(8px, 0.8vw, 15px));
-  border-radius: 14px 4px 4px 14px;
+  right: auto;
+  border-radius: 14px 0 0 22px;
   box-shadow:
-    inset 13px 0 18px rgba(60, 35, 18, 0.12),
-    inset -16px 0 24px rgba(255, 255, 255, 0.16),
-    5px 0 11px rgba(72, 46, 27, 0.08);
-  clip-path: polygon(0 0.4%, 100% 0, 99.2% 100%, 0 99.6%);
-  -webkit-mask-image:
-    linear-gradient(90deg, #000 0 30px, rgba(0, 0, 0, 0.48) 56px, transparent 88px),
-    linear-gradient(180deg, transparent 0, #000 8px, #000 calc(100% - 8px), transparent 100%);
-  mask-image:
-    linear-gradient(90deg, #000 0 30px, rgba(0, 0, 0, 0.48) 56px, transparent 88px),
-    linear-gradient(180deg, transparent 0, #000 8px, #000 calc(100% - 8px), transparent 100%);
-  -webkit-mask-composite: source-in;
-  mask-composite: intersect;
+    inset 10px 0 16px rgba(60, 35, 18, 0.16),
+    inset -8px 0 12px rgba(255, 255, 255, 0.14),
+    4px 0 8px rgba(72, 46, 27, 0.07);
+  -webkit-mask-image: linear-gradient(180deg, transparent 0, #000 12px, #000 calc(100% - 36px), rgba(0, 0, 0, 0.82) calc(100% - 18px), transparent 100%);
+  mask-image: linear-gradient(180deg, transparent 0, #000 12px, #000 calc(100% - 36px), rgba(0, 0, 0, 0.82) calc(100% - 18px), transparent 100%);
 }
 
 .page-stack-left::before {
-  left: 0;
-  width: clamp(18px, 2.2vw, 36px);
   background:
-    linear-gradient(90deg, rgba(75, 45, 26, 0.28), transparent 72%),
-    repeating-linear-gradient(180deg, transparent 0 6px, rgba(111, 83, 52, 0.16) 6px 7px);
+    linear-gradient(90deg, rgba(75, 45, 26, 0.32), transparent 76%),
+    repeating-linear-gradient(180deg, transparent 0 6px, rgba(111, 83, 52, 0.14) 6px 7px);
 }
 
 .page-stack-left::after {
-  right: 0;
-  width: 38%;
-  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.36));
+  background: linear-gradient(90deg, transparent 32%, rgba(255, 255, 255, 0.32));
 }
 
 .page-stack-right {
-  left: calc(50% + clamp(8px, 0.8vw, 15px));
+  left: auto;
   right: 21px;
-  border-radius: 4px 14px 14px 4px;
+  border-radius: 0 14px 22px 0;
   box-shadow:
-    inset -13px 0 18px rgba(60, 35, 18, 0.13),
-    inset 16px 0 24px rgba(255, 255, 255, 0.15),
-    -5px 0 11px rgba(72, 46, 27, 0.08);
-  clip-path: polygon(0.8% 0, 100% 0.4%, 100% 99.6%, 0 100%);
-  -webkit-mask-image:
-    linear-gradient(90deg, transparent calc(100% - 88px), rgba(0, 0, 0, 0.48) calc(100% - 56px), #000 calc(100% - 30px), #000 100%),
-    linear-gradient(180deg, transparent 0, #000 8px, #000 calc(100% - 8px), transparent 100%);
-  mask-image:
-    linear-gradient(90deg, transparent calc(100% - 88px), rgba(0, 0, 0, 0.48) calc(100% - 56px), #000 calc(100% - 30px), #000 100%),
-    linear-gradient(180deg, transparent 0, #000 8px, #000 calc(100% - 8px), transparent 100%);
-  -webkit-mask-composite: source-in;
-  mask-composite: intersect;
+    inset -10px 0 16px rgba(60, 35, 18, 0.16),
+    inset 8px 0 12px rgba(255, 255, 255, 0.14),
+    -4px 0 8px rgba(72, 46, 27, 0.07);
+  -webkit-mask-image: linear-gradient(180deg, transparent 0, #000 12px, #000 calc(100% - 36px), rgba(0, 0, 0, 0.82) calc(100% - 18px), transparent 100%);
+  mask-image: linear-gradient(180deg, transparent 0, #000 12px, #000 calc(100% - 36px), rgba(0, 0, 0, 0.82) calc(100% - 18px), transparent 100%);
 }
 
 .page-stack-right::before {
-  left: 0;
-  width: 38%;
-  background: linear-gradient(90deg, rgba(255, 255, 255, 0.34), transparent);
+  background: linear-gradient(90deg, rgba(255, 255, 255, 0.32), transparent 68%);
 }
 
 .page-stack-right::after {
-  right: 0;
-  width: clamp(18px, 2.2vw, 36px);
   background:
-    linear-gradient(90deg, transparent 16%, rgba(75, 45, 26, 0.3)),
-    repeating-linear-gradient(180deg, transparent 0 6px, rgba(111, 83, 52, 0.16) 6px 7px);
+    linear-gradient(90deg, transparent 18%, rgba(75, 45, 26, 0.32)),
+    repeating-linear-gradient(180deg, transparent 0 6px, rgba(111, 83, 52, 0.14) 6px 7px);
 }
 
 .page-stack-bottom {
-  left: 62px;
-  right: 62px;
+  left: 30px;
+  right: 30px;
   bottom: 18px;
   z-index: 2;
-  height: 7px;
-  border-radius: 0 0 7px 7px;
-  opacity: 0.7;
+  height: 8px;
+  border-radius: 0 0 13px 13px;
+  opacity: 0.64;
   background:
-    linear-gradient(90deg, transparent, rgba(68, 40, 22, 0.16) 8%, rgba(255, 255, 255, 0.14) 50%, rgba(68, 40, 22, 0.16) 92%, transparent),
+    linear-gradient(90deg, rgba(68, 40, 22, 0.16), rgba(255, 255, 255, 0.18) 10%, rgba(255, 255, 255, 0.14) 50%, rgba(68, 40, 22, 0.16) 90%, rgba(68, 40, 22, 0.16)),
     repeating-linear-gradient(
       180deg,
       #fbf0df 0,
@@ -927,8 +998,38 @@ a {
   box-shadow:
     0 2px 5px rgba(0, 0, 0, 0.1),
     inset 0 -1px 3px rgba(85, 55, 31, 0.12);
-  -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 7%, #000 93%, transparent 100%);
-  mask-image: linear-gradient(90deg, transparent 0, #000 7%, #000 93%, transparent 100%);
+  -webkit-mask-image: linear-gradient(90deg, transparent 0, rgba(0, 0, 0, 0.7) 6px, #000 14px, #000 calc(100% - 14px), rgba(0, 0, 0, 0.7) calc(100% - 6px), transparent 100%);
+  mask-image: linear-gradient(90deg, transparent 0, rgba(0, 0, 0, 0.7) 6px, #000 14px, #000 calc(100% - 14px), rgba(0, 0, 0, 0.7) calc(100% - 6px), transparent 100%);
+}
+
+.page-stack-turn {
+  bottom: 18px;
+  z-index: 5;
+  width: 38px;
+  height: 34px;
+  border-bottom: 8px solid rgba(224, 207, 175, 0.72);
+  opacity: 0.52;
+  background: transparent;
+  box-shadow:
+    0 2px 4px rgba(78, 50, 29, 0.1),
+    inset 0 -2px 0 rgba(255, 253, 246, 0.28),
+    inset 0 -4px 0 rgba(176, 146, 105, 0.18);
+}
+
+.page-stack-turn-left {
+  left: 21px;
+  border-left: 8px solid rgba(218, 198, 166, 0.58);
+  border-bottom-left-radius: 25px;
+  -webkit-mask-image: linear-gradient(90deg, #000 0 22px, transparent 37px);
+  mask-image: linear-gradient(90deg, #000 0 22px, transparent 37px);
+}
+
+.page-stack-turn-right {
+  right: 21px;
+  border-right: 8px solid rgba(218, 198, 166, 0.58);
+  border-bottom-right-radius: 25px;
+  -webkit-mask-image: linear-gradient(270deg, #000 0 22px, transparent 37px);
+  mask-image: linear-gradient(270deg, #000 0 22px, transparent 37px);
 }
 
 .book-ribbon {
@@ -2030,6 +2131,7 @@ a {
   .book-cover,
   .page-stack,
   .page-stack-bottom,
+  .page-stack-turn,
   .book-ribbon {
     display: none;
   }

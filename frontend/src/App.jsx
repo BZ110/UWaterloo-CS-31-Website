@@ -281,7 +281,6 @@ function App() {
                   rosterStudents={rightRosterStudents}
                   activeStudent={selectedStudent}
                   activeStudentId={selectedStudent?.id}
-                  selectedIndex={selectedIndex}
                   rosterPage={rosterPage}
                   maxRosterPage={maxRosterPage}
                   carouselStart={carouselStart}

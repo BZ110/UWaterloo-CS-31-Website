@@ -1,16 +1,15 @@
-# React + Vite
+# Waterloo CS/SWE '31 Frontend
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+This is the frontend code for the [Waterloo CS '31 Website](https://cs31.ca), designed by the 1st years of both the Computer Science and Software Engineering classes from the **University of Waterloo**.
 
-Currently, two official plugins are available:
+## How to run locally
+You may fetch the repository locally via `git`, and run the premade `dev` command in `npm` to launch the frontend. Ensure that you are in the scope of the frontend `./frontend/`.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+> NOTE: Ensure you have the required packages by running `npm install`.
 
-## React Compiler
+Vite should run locally on `localhost:5173`.
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## Pull requests
+All pull requests are considered for the maintenance duration of this part of the repository. If you are a current CS/SWE student in the graduating class of '31, you may submit a pull request to add yourself to `./src/data/mockData.js`.
 
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+> As of right now, that file is named `mockData.js`, and will be updated to `data.js` with the necessary imports changed when pull requests for directory additions are accepted.

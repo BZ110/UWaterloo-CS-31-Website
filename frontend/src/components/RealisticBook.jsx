@@ -34,6 +34,8 @@ const RealisticBook = ({
           onLetterClick={onLetterClick}
         />
         <div className="page-stack-bottom" aria-hidden="true" />
+        <div className="page-stack-turn page-stack-turn-left" aria-hidden="true" />
+        <div className="page-stack-turn page-stack-turn-right" aria-hidden="true" />
         <div className="book-ribbon" aria-hidden="true" />
 
         <div className="paper-spread">

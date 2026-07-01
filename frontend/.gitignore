@@ -29,3 +29,7 @@ brain/
 
 # Agentic coding may use local PY files to execute code. Let's not share bloat
 *.py
+
+# Other agentic coding-related things
+.chrome-codex-profile/
+.codex-screenshots/

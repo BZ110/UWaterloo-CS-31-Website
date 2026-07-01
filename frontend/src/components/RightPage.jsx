@@ -25,7 +25,6 @@ const RightPage = ({
   rosterStudents,
   activeStudent,
   activeStudentId,
-  selectedIndex,
   rosterPage,
   maxRosterPage,
   canNext,
