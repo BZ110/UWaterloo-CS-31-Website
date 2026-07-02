@@ -5,13 +5,13 @@ function getInitials(fullName) {
   return `${first}${last}`.toUpperCase();
 }
 
-function getSurname(student) {
-  return student.fullName.trim().split(/\s+/).slice(-1)[0] || student.fullName;
+function getFirstName(student) {
+  return student.fullName.trim().split(/\s+/)[0] || student.fullName;
 }
 
-function groupBySurnameLetter(students) {
+function groupByFirstNameLetter(students) {
   return students.reduce((groups, student) => {
-    const letter = getSurname(student).charAt(0).toUpperCase();
+    const letter = getFirstName(student).charAt(0).toUpperCase();
     return {
       ...groups,
       [letter]: [...(groups[letter] || []), student],
@@ -181,7 +181,7 @@ const RosterCard = ({ student, onClick }) => (
 );
 
 const IndexRightPage = ({ students, activeStudentId, onStudentSelect, pageNumber }) => {
-  const groups = groupBySurnameLetter(students);
+  const groups = groupByFirstNameLetter(students);
   const letters = Object.keys(groups).sort();
   const getPageNumberForStudent = (student) => {
     const studentIndex = students.findIndex((item) => item.id === student.id);
@@ -191,7 +191,7 @@ const IndexRightPage = ({ students, activeStudentId, onStudentSelect, pageNumber
   return (
     <div className="page-content index-right-page">
       <div className="page-topline right-align">
-        <span>Jump to a student by surname</span>
+        <span>Jump to a student by first name</span>
         <span>- {pageNumber} -</span>
       </div>
 

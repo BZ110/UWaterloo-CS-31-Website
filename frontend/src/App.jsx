@@ -11,27 +11,27 @@ const TRANSITION_MS = 680;
 const CAROUSEL_SIZE = 5;
 const STUDENTS_PER_PAGE = 6;
 
-const sortedBySurname = (students) =>
+const sortedByFirstName = (students) =>
   [...students].sort((a, b) =>
-    getSurname(a).localeCompare(getSurname(b)) ||
+    getFirstName(a).localeCompare(getFirstName(b)) ||
     a.fullName.localeCompare(b.fullName)
   );
 
 const sectionStudents = {
-  cs: sortedBySurname(csStudents),
-  swe: sortedBySurname(sweStudents),
+  cs: sortedByFirstName(csStudents),
+  swe: sortedByFirstName(sweStudents),
 };
 
 const uniqueStudents = Array.from(
   new Map(allStudents.map((student) => [student.id, student])).values()
 );
 
-function getSurname(student) {
-  return student.fullName.trim().split(/\s+/).slice(-1)[0] || student.fullName;
+function getFirstName(student) {
+  return student.fullName.trim().split(/\s+/)[0] || student.fullName;
 }
 
 function getInitialLetter(student) {
-  return getSurname(student).charAt(0).toUpperCase();
+  return getFirstName(student).charAt(0).toUpperCase();
 }
 
 function getCarouselStartFor(student, students) {

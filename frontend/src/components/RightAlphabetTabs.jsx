@@ -2,7 +2,7 @@ const letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
 
 const RightAlphabetTabs = ({ activeLetter, availableLetters, onLetterClick }) => {
   return (
-    <div className="alphabet-tabs" aria-label="Jump by surname">
+    <div className="alphabet-tabs" aria-label="Jump by first name">
       {letters.map((letter) => {
         const isEnabled = availableLetters.has(letter);
         const isActive = activeLetter === letter;
@@ -16,8 +16,8 @@ const RightAlphabetTabs = ({ activeLetter, availableLetters, onLetterClick }) =>
             disabled={!isEnabled}
             aria-label={
               isEnabled
-                ? `Jump to surnames beginning with ${letter}`
-                : `No surnames beginning with ${letter}`
+                ? `Jump to first names beginning with ${letter}`
+                : `No first names beginning with ${letter}`
             }
           >
             {letter}

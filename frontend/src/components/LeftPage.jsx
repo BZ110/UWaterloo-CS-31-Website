@@ -17,7 +17,7 @@ function groupLetters(students) {
   return Array.from(
     new Set(
       students.map((student) =>
-        student.fullName.trim().split(/\s+/).slice(-1)[0].charAt(0).toUpperCase()
+        student.fullName.trim().split(/\s+/)[0].charAt(0).toUpperCase()
       )
     )
   ).sort();
@@ -69,7 +69,7 @@ const LeftPage = ({
           <p className="section-kicker">People Index</p>
           <h2>{section.toUpperCase()} Classmates</h2>
           <p>
-            Browse by surname, jump back into a profile, or use the alphabet
+            Browse by first name, jump back into a profile, or use the alphabet
             tabs along the book edge.
           </p>
         </div>
