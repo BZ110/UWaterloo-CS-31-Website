@@ -78,7 +78,6 @@ const RightPage = ({
         >
           Next &rarr;
         </button>
-        <span>- {pageNumber} -</span>
       </div>
 
       {/* Reinstated original section structure taking its own row */}
@@ -140,7 +139,6 @@ const RosterPage = ({
       >
         Next spread &rarr;
       </button>
-      <span>- {pageNumber} -</span>
     </div>
 
     <div className="roster-stack">
@@ -192,7 +190,6 @@ const IndexRightPage = ({ students, activeStudentId, onStudentSelect, pageNumber
     <div className="page-content index-right-page">
       <div className="page-topline right-align">
         <span>Jump to a student by first name</span>
-        <span>- {pageNumber} -</span>
       </div>
 
       <div className="index-list">

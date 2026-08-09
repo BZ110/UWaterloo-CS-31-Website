@@ -24,14 +24,15 @@ const navItems = [
     ),
   },
   {
-    id: 'minigame',
-    label: 'Minigame',
+    id: 'webring',
+    label: 'Webring',
+    href: 'https://webring.cs31.ca',
     icon: (
-      <path
-        d="M8.5 6.5v11l9-5.5-9-5.5Z"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
+      <>
+        <circle cx="8" cy="12" r="4.5" />
+        <circle cx="16" cy="12" r="4.5" />
+        <path d="M10.5 12h3" strokeLinecap="round" />
+      </>
     ),
   },
 ];
@@ -151,6 +152,28 @@ const TopNav = ({ view, onNavigate, allStudents, onSearchSelect }) => {
 
       <div className="nav-actions">
         {navItems.map((item) => {
+          if (item.href) {
+            return (
+              <a
+                key={item.id}
+                className="nav-action"
+                href={item.href}
+                aria-label={item.label}
+              >
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="1.8"
+                  aria-hidden="true"
+                >
+                  {item.icon}
+                </svg>
+                <span>{item.label}</span>
+              </a>
+            );
+          }
+
           const isActive = view === item.id;
           return (
             <button

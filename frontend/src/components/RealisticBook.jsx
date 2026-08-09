@@ -39,9 +39,13 @@ const RealisticBook = ({
         <div className="book-ribbon" aria-hidden="true" />
 
         <div className="paper-spread">
-          <section className="book-page left-book-page">{leftContent}</section>
+          <section className="book-page left-book-page" aria-label="Left book page">
+            {leftContent}
+          </section>
           <div className="book-crease" aria-hidden="true" />
-          <section className="book-page right-book-page">{rightContent}</section>
+          <section className="book-page right-book-page" aria-label="Right book page">
+            {rightContent}
+          </section>
         </div>
       </div>
     </main>

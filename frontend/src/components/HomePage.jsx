@@ -26,9 +26,9 @@ const HomePage = ({ onNavigate }) => {
           <button type="button" className="primary-home-action" onClick={() => onNavigate('directory')}>
             Open Directory
           </button>
-          <button type="button" className="secondary-home-action" onClick={() => onNavigate('minigame')}>
-            Minigame
-          </button>
+          <a className="secondary-home-action" href="https://webring.cs31.ca">
+            Webring
+          </a>
         </div>
       </main>
     </div>

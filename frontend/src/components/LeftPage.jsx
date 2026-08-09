@@ -142,7 +142,7 @@ const LeftPage = ({
         <div className="identity-block">
           <h2 aria-label={student.fullName}>
             <span>{name.first}</span>
-            <span>{name.last}</span>
+            {name.last && <span>{name.last}</span>}
           </h2>
           <button
             type="button"

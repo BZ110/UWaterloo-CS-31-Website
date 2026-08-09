@@ -2,7 +2,7 @@ const letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
 
 const RightAlphabetTabs = ({ activeLetter, availableLetters, onLetterClick }) => {
   return (
-    <div className="alphabet-tabs" aria-label="Jump by first name">
+    <nav className="alphabet-tabs" aria-label="Jump by first name">
       {letters.map((letter) => {
         const isEnabled = availableLetters.has(letter);
         const isActive = activeLetter === letter;
@@ -14,6 +14,7 @@ const RightAlphabetTabs = ({ activeLetter, availableLetters, onLetterClick }) =>
             className={`alphabet-tab ${isActive ? 'is-active' : ''}`}
             onClick={() => onLetterClick(letter)}
             disabled={!isEnabled}
+            aria-pressed={isActive}
             aria-label={
               isEnabled
                 ? `Jump to first names beginning with ${letter}`
@@ -24,7 +25,7 @@ const RightAlphabetTabs = ({ activeLetter, availableLetters, onLetterClick }) =>
           </button>
         );
       })}
-    </div>
+    </nav>
   );
 };
 

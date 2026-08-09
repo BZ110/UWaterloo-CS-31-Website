@@ -5,7 +5,7 @@ const labels = {
 
 const TopBookmarks = ({ activeSection, onSectionChange }) => {
   return (
-    <div className="top-bookmarks" aria-label="Directory section">
+    <div className="top-bookmarks" role="group" aria-label="Directory section">
       {Object.entries(labels).map(([section, label]) => (
         <button
           key={section}
