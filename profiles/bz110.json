@@ -1,0 +1,22 @@
+{
+  "program": "cs",
+  "name": "Bashar Zain",
+  "pronouns": "he/him",
+  "headline": "DFIR, Windows APIs, bare-metal systems, and a little medicinal software work.",
+  "bio": "I spend my time building CS projects, digging into systems problems, and working on things that are useful in the real world. I am especially interested in DFIR, Windows internals, bare-metal work, and software that supports healthcare.",
+  "classOf": 2031,
+  "interests": ["DFIR", "Windows internals", "Bare-metal systems", "Graph theory", "Tea brewing"],
+  "accent": "#b8e3ff",
+  "favoriteSubject": "Math",
+  "coopSequence": "Sequence 1",
+  "hobbies": ["Overwatch", "Minecraft", "Writing", "Watching movies", "Coding projects"],
+  "dreamCompany": "Apple",
+  "quote": "Shit happens. What's next?",
+  "email": "bzain@uwaterloo.ca",
+  "links": {
+    "instagram": "https://www.instagram.com/bashar.yzain/",
+    "linkedIn": "https://www.linkedin.com/in/basharzain/",
+    "website": "https://basharzain.com",
+    "github": "https://github.com/BZ110"
+  }
+}
