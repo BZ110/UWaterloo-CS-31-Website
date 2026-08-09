@@ -1,0 +1,92 @@
+name: directory profile check
+
+on:
+  pull_request_target:
+    types: [opened, synchronize, reopened]
+
+permissions:
+  contents: write
+  pull-requests: write
+
+concurrency:
+  group: directory-profile-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
+
+jobs:
+  validate-profile:
+    runs-on: ubuntu-latest
+    steps:
+      # Trusted base checkout: profile JSON is the only content copied from the PR.
+      - uses: actions/checkout@v4
+
+      - name: Inspect the proposed profile file
+        id: submission
+        env:
+          GH_TOKEN: ${{ github.token }}
+          PR: ${{ github.event.pull_request.number }}
+          REPOSITORY: ${{ github.repository }}
+          AUTHOR: ${{ github.event.pull_request.user.login }}
+        run: |
+          author=$(printf '%s' "$AUTHOR" | tr '[:upper:]' '[:lower:]')
+          expected="profiles/${author}.json"
+          files=$(gh api "repos/$REPOSITORY/pulls/$PR/files" --paginate)
+          safe=$(echo "$files" | jq --arg expected "$expected" -r 'length == 1 and all(.[]; .filename == $expected and .status == "added")')
+          echo "safe=$safe" >> "$GITHUB_OUTPUT"
+          echo "profile_file=$expected" >> "$GITHUB_OUTPUT"
+
+          if [ "$safe" = true ]; then
+            git fetch origin "pull/$PR/head:profile-pr" --depth=1
+            git checkout profile-pr -- "$expected"
+          fi
+
+      - name: Validate profile schema
+        id: validate
+        continue-on-error: true
+        env:
+          PR_SAFE: ${{ steps.submission.outputs.safe }}
+          PR_COMMENT_FILE: pr-comment.md
+        run: node scripts/validate-profiles.mjs
+
+      - name: Post the check result
+        if: always() && hashFiles('pr-comment.md') != ''
+        uses: actions/github-script@v7
+        env:
+          COMMENT_FILE: pr-comment.md
+        with:
+          script: |
+            const fs = require('fs');
+            const body = fs.readFileSync(process.env.COMMENT_FILE, 'utf8');
+            const { owner, repo } = context.repo;
+            const issue_number = context.issue.number;
+            const comments = await github.paginate(github.rest.issues.listComments, {
+              owner, repo, issue_number, per_page: 100,
+            });
+            const existing = comments.find((comment) =>
+              comment.user.type === 'Bot' && comment.body.includes('<!-- cs31-profile-bot -->')
+            );
+            if (existing) {
+              await github.rest.issues.updateComment({ owner, repo, comment_id: existing.id, body });
+            } else {
+              await github.rest.issues.createComment({ owner, repo, issue_number, body });
+            }
+
+      - name: Mark a valid profile ready
+        if: steps.submission.outputs.safe == 'true' && steps.validate.outcome == 'success'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          PR: ${{ github.event.pull_request.number }}
+        run: |
+          gh label create ready-to-merge --color 0e8a16 --description "valid directory profile; merges after review window" --force >/dev/null
+          gh label create hold --color b60205 --description "maintainer review required; blocks profile auto-merge" --force >/dev/null
+          gh pr edit "$PR" --add-label ready-to-merge
+
+      - name: Clear the ready label when validation fails
+        if: always() && (steps.submission.outputs.safe != 'true' || steps.validate.outcome != 'success')
+        env:
+          GH_TOKEN: ${{ github.token }}
+          PR: ${{ github.event.pull_request.number }}
+        run: gh pr edit "$PR" --remove-label ready-to-merge || true
+
+      - name: Fail invalid submissions
+        if: steps.submission.outputs.safe != 'true' || steps.validate.outcome != 'success'
+        run: exit 1

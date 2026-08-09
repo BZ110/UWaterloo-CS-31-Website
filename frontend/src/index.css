@@ -2020,6 +2020,46 @@ a {
   pointer-events: none;
 }
 
+.empty-roster {
+  align-self: center;
+  max-width: 29rem;
+  margin: auto;
+  border: 1px dashed rgba(95, 81, 67, 0.3);
+  padding: clamp(24px, 3vw, 40px);
+  text-align: center;
+}
+
+.empty-roster h2 {
+  margin: 8px 0 12px;
+  color: var(--ink);
+  font-family: var(--font-serif);
+  font-size: clamp(1.8rem, 2.8vw, 2.7rem);
+  font-weight: 500;
+  line-height: 1.05;
+}
+
+.empty-roster p:not(.section-kicker) {
+  margin: 0;
+  color: var(--ink-soft);
+  font-family: var(--font-serif);
+  line-height: 1.45;
+}
+
+.empty-roster a {
+  display: inline-flex;
+  margin-top: 18px;
+  color: var(--crimson);
+  font-size: 0.8rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-decoration: none;
+  text-transform: uppercase;
+}
+
+.empty-roster a:hover {
+  text-decoration: underline;
+}
+
 .left-book-page .page-number {
   margin-left: 0;
   margin-right: auto;

@@ -24,7 +24,7 @@ const RightPage = ({
   students,
   rosterStudents,
   activeStudent,
-  activeStudentId,
+  activeProfileId,
   rosterPage,
   maxRosterPage,
   canNext,
@@ -52,7 +52,7 @@ const RightPage = ({
     return (
       <IndexRightPage
         students={students}
-        activeStudentId={activeStudentId}
+        activeProfileId={activeProfileId}
         onStudentSelect={onStudentSelect}
         pageNumber={pageNumber}
       />
@@ -80,40 +80,24 @@ const RightPage = ({
         </button>
       </div>
 
-      {/* Reinstated original section structure taking its own row */}
-      <section className="right-section quote-section">
-        <h3>
-          <SectionIcon type="quote" />
-          Quote
-        </h3>
-        <blockquote>
-          <p>"{activeStudent.quote}"</p>
-          <cite>- {activeStudent.fullName}</cite>
-        </blockquote>
-      </section>
+      {activeStudent.quote && (
+        <section className="right-section quote-section">
+          <h3>
+            <SectionIcon type="quote" />
+            In their words
+          </h3>
+          <blockquote>
+            <p>“{activeStudent.quote}”</p>
+            <cite>- {activeStudent.fullName}</cite>
+          </blockquote>
+        </section>
+      )}
 
-      {/* Custom styled breakdown grid using color-token lines */}
       <div className="profile-details">
-        <DetailRow label="Co-op Sequence" value={activeStudent.coopSequence} />
-        <DetailRow label="Hobbies" value={activeStudent.hobbies} />
-        <DetailRow label="Fun Facts" value={activeStudent.funFacts} />
-        <DetailRow label="Dream Company" value={activeStudent.dreamCompany} />
+        <ProfileDetails student={activeStudent} />
       </div>
 
-      {/* Social anchors bar positioned neatly at the footer of the page */}
-      <div className="connect-row">
-        <span>Connect</span>
-        <a href={`mailto:${activeStudent.email}`}>Email</a>
-        <a href={activeStudent.instagram} target="_blank" rel="noreferrer">
-          Instagram
-        </a>
-        <a href={activeStudent.linkedIn} target="_blank" rel="noreferrer">
-          LinkedIn
-        </a>
-        <a href={activeStudent.website} target="_blank" rel="noreferrer">
-          Website
-        </a>
-      </div>
+      <ConnectRow student={activeStudent} />
 
       <PageNumber pageNumber={pageNumber} />
     </div>
@@ -141,20 +125,22 @@ const RosterPage = ({
       </button>
     </div>
 
-    <div className="roster-stack">
-      {students.map((student) => (
-        <RosterCard
-          key={student.id}
-          student={student}
-          onClick={() => onStudentSelect(student)}
-        />
-      ))}
-    </div>
-
-    {rosterPage === maxRosterPage && (
-      <div className="roster-endnote">
-        End of this section.
+    {students.length ? (
+      <div className="roster-stack">
+        {students.map((student) => (
+          <RosterCard
+            key={student.id}
+            student={student}
+            onClick={() => onStudentSelect(student)}
+          />
+        ))}
       </div>
+    ) : (
+      <EmptyRoster />
+    )}
+
+    {students.length > 0 && rosterPage === maxRosterPage && (
+      <div className="roster-endnote">End of this section.</div>
     )}
 
     <PageNumber pageNumber={pageNumber} />
@@ -172,13 +158,13 @@ const RosterCard = ({ student, onClick }) => (
     </span>
     <span className="roster-card-copy-expanded">
       <span className="roster-card-name-expanded">{student.fullName}</span>
-      <span className="roster-card-meta-expanded">{student.pronouns} / {student.studentId}</span>
+      <span className="roster-card-meta-expanded">{student.pronouns} / {student.programLabel}</span>
       <span className="roster-card-desc-expanded">{student.shortDesc}</span>
     </span>
   </button>
 );
 
-const IndexRightPage = ({ students, activeStudentId, onStudentSelect, pageNumber }) => {
+const IndexRightPage = ({ students, activeProfileId, onStudentSelect, pageNumber }) => {
   const groups = groupByFirstNameLetter(students);
   const letters = Object.keys(groups).sort();
   const getPageNumberForStudent = (student) => {
@@ -202,7 +188,7 @@ const IndexRightPage = ({ students, activeStudentId, onStudentSelect, pageNumber
                   key={student.id}
                   type="button"
                   className={`index-entry ${
-                    student.id === activeStudentId ? 'is-active' : ''
+                    student.id === activeProfileId ? 'is-active' : ''
                   }`}
                   onClick={() => onStudentSelect(student)}
                 >
@@ -220,6 +206,60 @@ const IndexRightPage = ({ students, activeStudentId, onStudentSelect, pageNumber
   );
 };
 
+const ProfileDetails = ({ student }) => {
+  const details = [
+    ['Class', student.classYear],
+    ['Interests', student.interests],
+    ['Favourite subject', student.favouriteSubject],
+    ['Clubs & communities', student.clubs],
+    ['Co-op sequence', student.coopSequence],
+    ['Hobbies', student.hobbies],
+    ['Fun fact', student.funFacts],
+    ['Future goal', student.dreamCompany],
+  ].filter(([, value]) => value);
+
+  return details.map(([label, value]) => <DetailRow key={label} label={label} value={value} />);
+};
+
+const ConnectRow = ({ student }) => {
+  const links = [
+    student.email && ['Email', `mailto:${student.email}`],
+    student.instagram && ['Instagram', student.instagram],
+    student.linkedIn && ['LinkedIn', student.linkedIn],
+    student.website && ['Website', student.website],
+    student.github && ['GitHub', student.github],
+  ].filter(Boolean);
+
+  if (!links.length) return null;
+
+  return (
+    <div className="connect-row">
+      <span>Connect</span>
+      {links.map(([label, href]) => (
+        <a
+          key={label}
+          href={href}
+          target={href.startsWith('mailto:') ? undefined : '_blank'}
+          rel={href.startsWith('mailto:') ? undefined : 'noreferrer'}
+        >
+          {label}
+        </a>
+      ))}
+    </div>
+  );
+};
+
+const EmptyRoster = () => (
+  <div className="empty-roster">
+    <p className="section-kicker">Open book</p>
+    <h2>Make the first page yours.</h2>
+    <p>Profiles are added through a small, public pull request.</p>
+    <a href="https://github.com/BZ110/UWaterloo-CS-31-Website#join-the-directory">
+      Add your profile &rarr;
+    </a>
+  </div>
+);
+
 const SectionIcon = ({ type }) => {
   const paths = {
     quote: 'M9 8H5v4h3v4H4V8h5Zm11 0h-4v4h3v4h-4V8h5Z',
@@ -232,10 +272,10 @@ const SectionIcon = ({ type }) => {
   );
 };
 
-const DetailRow = ({ label, value, isLong = false }) => (
-  <div className={`detail-row ${isLong ? 'is-long' : ''}`}>
+const DetailRow = ({ label, value }) => (
+  <div className="detail-row">
     <span>{label}</span>
-    <p>{value || '—'}</p>
+    <p>{value}</p>
   </div>
 );
 

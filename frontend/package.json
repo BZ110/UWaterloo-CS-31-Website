@@ -4,10 +4,12 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
+    "prebuild": "npm run validate:profiles",
     "dev": "vite",
     "build": "vite build",
     "lint": "eslint .",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "validate:profiles": "node ../scripts/validate-profiles.mjs"
   },
   "dependencies": {
     "@tailwindcss/vite": "^4.3.0",

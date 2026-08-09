@@ -5,7 +5,7 @@ import RealisticBook from './components/RealisticBook';
 import LeftPage from './components/LeftPage';
 import RightPage from './components/RightPage';
 import MinigamePage from './components/MinigamePage';
-import { allStudents, csStudents, sweStudents } from './data/mockData';
+import { allStudents, csStudents, sweStudents } from './data/data';
 
 const TRANSITION_MS = 680;
 const CAROUSEL_SIZE = 5;
@@ -47,7 +47,7 @@ function App() {
   const [nextView, setNextView] = useState(null);
   const [transitionPhase, setTransitionPhase] = useState('idle');
   const [section, setSection] = useState('cs');
-  const [selectedStudentId, setSelectedStudentId] = useState(
+  const [selectedProfileId, setSelectedProfileId] = useState(
     sectionStudents.cs[0]?.id ?? null
   );
   const [directoryMode, setDirectoryMode] = useState('overview');
@@ -58,7 +58,7 @@ function App() {
 
   const activeStudents = sectionStudents[section];
   const selectedStudent =
-    activeStudents.find((student) => student.id === selectedStudentId) ||
+    activeStudents.find((student) => student.id === selectedProfileId) ||
     activeStudents[0] ||
     null;
   const selectedIndex = selectedStudent
@@ -109,7 +109,7 @@ function App() {
     const nextSectionStudents = sectionStudents[student.section];
 
     setSection(student.section);
-    setSelectedStudentId(student.id);
+    setSelectedProfileId(student.id);
     setActiveLetter(getInitialLetter(student));
     setDirectoryMode('profile');
     setCarouselStart(getCarouselStartFor(student, nextSectionStudents));
@@ -127,7 +127,7 @@ function App() {
   const selectStudentInCurrentSection = (student) => {
     const nextIndex = activeStudents.findIndex((item) => item.id === student.id);
 
-    setSelectedStudentId(student.id);
+    setSelectedProfileId(student.id);
     setActiveLetter(getInitialLetter(student));
     setDirectoryMode('profile');
     setCarouselStart(getCarouselStartFor(student, activeStudents));
@@ -139,7 +139,7 @@ function App() {
     const firstStudent = nextStudents[0] || null;
 
     setSection(nextSection);
-    setSelectedStudentId(firstStudent?.id ?? null);
+    setSelectedProfileId(firstStudent?.id ?? null);
     setActiveLetter(null);
     setDirectoryMode('overview');
     setCarouselStart(0);
@@ -160,7 +160,7 @@ function App() {
 
     if (match) {
       setActiveLetter(letter);
-      setSelectedStudentId(match.id);
+      setSelectedProfileId(match.id);
       setDirectoryMode('overview');
       setRosterPage(
         Math.floor(
@@ -280,7 +280,7 @@ function App() {
                   students={activeStudents}
                   rosterStudents={rightRosterStudents}
                   activeStudent={selectedStudent}
-                  activeStudentId={selectedStudent?.id}
+                  activeProfileId={selectedStudent?.id}
                   rosterPage={rosterPage}
                   maxRosterPage={maxRosterPage}
                   carouselStart={carouselStart}

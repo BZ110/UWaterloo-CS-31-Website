@@ -55,7 +55,7 @@ const TopNav = ({ view, onNavigate, allStudents, onSearchSelect }) => {
 
     return allStudents
       .filter((student) =>
-        `${student.fullName} ${student.studentId} ${student.section}`
+        `${student.fullName} ${student.section} ${student.interests}`
           .toLowerCase()
           .includes(normalizedQuery)
       )
@@ -138,7 +138,7 @@ const TopNav = ({ view, onNavigate, allStudents, onSearchSelect }) => {
                   <span className="search-result-copy">
                     <span className="search-result-name">{student.fullName}</span>
                     <span className="search-result-meta">
-                      {student.section.toUpperCase()} / {student.studentId}
+                      {student.programLabel}
                     </span>
                   </span>
                 </button>

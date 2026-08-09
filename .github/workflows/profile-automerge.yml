@@ -1,0 +1,45 @@
+name: merge ready directory profiles
+
+on:
+  schedule:
+    - cron: "17 * * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  merge-ready-profiles:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Merge profiles after the review window
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REPOSITORY: ${{ github.repository }}
+        run: |
+          now=$(date -u +%s)
+          gh pr list --repo "$REPOSITORY" --state open --label ready-to-merge --json number,createdAt,author,labels --jq '.[] | @base64' | while read -r encoded; do
+            pr=$(echo "$encoded" | base64 --decode)
+            number=$(echo "$pr" | jq -r '.number')
+            created=$(date -u -d "$(echo "$pr" | jq -r '.createdAt')" +%s)
+            author=$(echo "$pr" | jq -r '.author.login' | tr '[:upper:]' '[:lower:]')
+            expected="profiles/${author}.json"
+
+            if [ $((now - created)) -lt 86400 ]; then
+              continue
+            fi
+            if echo "$pr" | jq -e '.labels | any(.name == "hold")' >/dev/null; then
+              continue
+            fi
+
+            files=$(gh api "repos/$REPOSITORY/pulls/$number/files" --paginate)
+            safe=$(echo "$files" | jq --arg expected "$expected" -r 'length == 1 and all(.[]; .filename == $expected and .status == "added")')
+            if [ "$safe" != true ]; then
+              continue
+            fi
+
+            gh api --method PUT "repos/$REPOSITORY/pulls/$number/merge" \
+              -f merge_method=squash \
+              -f commit_title="Add directory profile from @$author"
+          done

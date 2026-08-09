@@ -1,0 +1,23 @@
+{
+  "program": "cs",
+  "name": "Your Name",
+  "pronouns": "they/them",
+  "headline": "A one-sentence introduction to what you are into.",
+  "bio": "A short public bio for the class directory. Share only information you are comfortable publishing.",
+  "classOf": 2031,
+  "interests": ["Systems", "Design", "Making useful things"],
+  "accent": "#b8e3ff",
+  "favoriteSubject": "CS 135",
+  "clubs": ["A club or community"],
+  "coopSequence": "Sequence 1",
+  "hobbies": ["A hobby"],
+  "funFact": "An optional small fact.",
+  "dreamCompany": "An optional future goal.",
+  "quote": "An optional quote.",
+  "links": {
+    "github": "https://github.com/your-github-username",
+    "website": "https://example.com",
+    "linkedIn": "https://www.linkedin.com/in/your-profile",
+    "instagram": "https://www.instagram.com/your-profile/"
+  }
+}

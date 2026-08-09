@@ -1,0 +1,47 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Waterloo CS/SWE '31 directory profile",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["program", "name", "pronouns", "headline", "bio", "classOf", "interests", "accent"],
+  "properties": {
+    "program": { "enum": ["cs", "swe"] },
+    "name": { "type": "string", "minLength": 2, "maxLength": 80 },
+    "pronouns": { "type": "string", "minLength": 2, "maxLength": 40 },
+    "pronunciation": { "type": "string", "maxLength": 100 },
+    "headline": { "type": "string", "minLength": 8, "maxLength": 180 },
+    "bio": { "type": "string", "minLength": 24, "maxLength": 1400 },
+    "classOf": { "const": 2031 },
+    "interests": { "$ref": "#/$defs/textList" },
+    "favoriteSubject": { "$ref": "#/$defs/shortText" },
+    "clubs": { "$ref": "#/$defs/textList" },
+    "coopSequence": { "$ref": "#/$defs/shortText" },
+    "hobbies": { "$ref": "#/$defs/textList" },
+    "funFact": { "$ref": "#/$defs/shortText" },
+    "dreamCompany": { "$ref": "#/$defs/shortText" },
+    "quote": { "$ref": "#/$defs/shortText" },
+    "email": { "type": "string", "format": "email", "maxLength": 254 },
+    "photoUrl": { "$ref": "#/$defs/httpsUrl" },
+    "accent": { "type": "string", "pattern": "^#[0-9A-Fa-f]{6}$" },
+    "links": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "github": { "$ref": "#/$defs/httpsUrl" },
+        "instagram": { "$ref": "#/$defs/httpsUrl" },
+        "linkedIn": { "$ref": "#/$defs/httpsUrl" },
+        "website": { "$ref": "#/$defs/httpsUrl" }
+      }
+    }
+  },
+  "$defs": {
+    "shortText": { "type": "string", "minLength": 2, "maxLength": 240 },
+    "httpsUrl": { "type": "string", "format": "uri", "pattern": "^https://" },
+    "textList": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 8,
+      "items": { "type": "string", "minLength": 2, "maxLength": 80 }
+    }
+  }
+}

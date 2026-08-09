@@ -164,7 +164,7 @@ const LeftPage = ({
               />
             </svg>
           </button>
-          <p className="phonetic">{student.phonetic}</p>
+          {student.phonetic && <p className="phonetic">{student.phonetic}</p>}
           <p className="definition">
             <strong>noun.</strong>
             {student.shortDesc}
@@ -204,15 +204,19 @@ const RosterPage = ({
       </span>
     </div>
 
-    <div className="roster-stack">
-      {students.map((rosterStudent) => (
-        <RosterCard
-          key={rosterStudent.id}
-          student={rosterStudent}
-          onClick={() => onStudentSelect(rosterStudent)}
-        />
-      ))}
-    </div>
+    {students.length ? (
+      <div className="roster-stack">
+        {students.map((rosterStudent) => (
+          <RosterCard
+            key={rosterStudent.id}
+            student={rosterStudent}
+            onClick={() => onStudentSelect(rosterStudent)}
+          />
+        ))}
+      </div>
+    ) : (
+      <EmptyRoster section={section} />
+    )}
 
     <PageNumber pageNumber={pageNumber} />
   </div>
@@ -233,10 +237,21 @@ const RosterCard = ({ student, onClick }) => (
     </span>
     <span className="roster-card-copy-expanded">
       <span className="roster-card-name-expanded">{student.fullName}</span>
-      <span className="roster-card-meta-expanded">{student.pronouns} / {student.studentId}</span>
+      <span className="roster-card-meta-expanded">{student.pronouns} / {student.programLabel}</span>
       <span className="roster-card-desc-expanded">{student.shortDesc}</span>
     </span>
   </button>
+);
+
+const EmptyRoster = ({ section }) => (
+  <div className="empty-roster">
+    <p className="section-kicker">First entry</p>
+    <h2>The {section.toUpperCase()} register is ready.</h2>
+    <p>Open a profile pull request to add yourself to the class book.</p>
+    <a href="https://github.com/BZ110/UWaterloo-CS-31-Website#join-the-directory">
+      Read the contribution guide &rarr;
+    </a>
+  </div>
 );
 
 const DetailRow = ({ label, value, isLong = false }) => (
