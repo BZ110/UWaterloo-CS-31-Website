@@ -19,8 +19,9 @@ particular, **do not include student numbers**; the schema and bot reject them.
 4. Open a pull request that adds **only** your profile JSON file.
 
 The profile bot validates the schema, ensures the filename belongs to the PR author,
-and labels a safe submission `ready-to-merge`. It is merged after a 24-hour review
-window unless a maintainer adds the `hold` label. Pull requests that change code,
+and labels a safe submission `ready-to-merge`. It is automatically merged after a
+24-hour review window unless a maintainer adds the `hold` label; maintainers may also
+merge an approved profile earlier. Pull requests that change code,
 documentation, or another person's profile receive normal human review instead.
 
 To test a profile locally, run:
