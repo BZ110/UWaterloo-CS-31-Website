@@ -1,0 +1,23 @@
+{
+  "program": "cs",
+  "name": "Haoshi Wu",
+  "pronouns": "he/him",
+  "headline": "the sky is never the limit. just look at the stars! don't they shine for you",
+  "bio": "i <3 backend systems + astrophysics and the beauty behind aerospace companies being able to process billions and billions of points of data in miliseconds.",
+  "classOf": 2031,
+  "interests": ["Backend Development", "Astrophysics", "Optimization", "Systems Design Architecture"],
+  "accent": "#b8e3ff",
+  "favoriteSubject": "CS 145",
+  "clubs": ["Waterloo Rocketry"],
+  "coopSequence": "Sequence 2",
+  "hobbies": ["Watching Anime, Model Building"],
+  "funFact": "Toucans are my favourite animal!",
+  "dreamCompany": "CSA/NASA",
+  "quote": "C'est la vie.",
+  "links": {
+    "github": "https://github.com/weewoo14",
+    "website": "https://weewoo14.vercel.app",
+    "linkedIn": "https://www.linkedin.com/in/haoshi-wu-weewoo14",
+    "instagram": "https://www.instagram.com/weewoofourteen/"
+  }
+}
