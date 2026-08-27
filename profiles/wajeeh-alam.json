@@ -1,0 +1,22 @@
+{
+  "program": "cs",
+  "name": "Wajeeh Alam",
+  "pronouns": "",
+  "headline": "Doing content/soft eng! 🧯 0x intern (Shopify, Anthropic). Follow me to join the journey :D",
+  "bio": "I build projects that I think are super cool! Building Oro, an A.I fashion stylist, rn :)",
+  "classOf": 2031,
+  "interests": ["ML", "React", "Content Creation", "Going for walks"],
+  "accent": "#8b1e21",
+  "favoriteSubject": "Math",
+  "coopSequence": "Seq. 1",
+  "hobbies": ["Roblox", "Anime", "Gym/Calisthenics", "Side Quests"],
+  "dreamCompany": "Shopify/NVIDIA",
+  "quote": "Let's GOOOOOOOOOOOOOOO!",
+  "email": "w5alam@uwaterloo.ca",
+  "links": {
+    "instagram": "https://www.instagram.com/wajeehalam._/",
+    "linkedIn": "https://www.linkedin.com/in/wajeeh-alam/",
+    "website": "https://wajeehalam.vercel.app",
+    "github": "https://github.com/wajeeh-alam"
+  }
+}
